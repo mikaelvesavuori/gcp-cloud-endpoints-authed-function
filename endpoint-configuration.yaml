@@ -1,0 +1,31 @@
+swagger: '2.0'
+info:
+  title: Cloud Endpoints + GCF
+  description: Sample API on Cloud Endpoints with a Google Cloud Functions backend
+  version: 1.0.0
+host: endpoint-{RANDOM}.a.run.app # EDIT THIS
+schemes:
+  - https
+produces:
+  - application/json
+paths:
+  /helloWorld:
+    get:
+      summary: Greet a user
+      operationId: helloWorld
+      x-google-backend:
+        address: https://{REGION}-{PROJECT_ID}.cloudfunctions.net/{FUNCTION_NAME} # EDIT THIS
+        # path_translation: APPEND_PATH_TO_ADDRESS # Only for Cloud Run, not Cloud Functions
+      security:
+        - api_key: []
+      #'security' block above can be replaced with 'x-google-allow: all' to authenticate all users
+      responses:
+        '200':
+          description: A successful response
+          schema:
+            type: string
+securityDefinitions:
+  api_key:
+    type: "apiKey"
+    name: "key"
+    in: "query"
