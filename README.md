@@ -10,7 +10,7 @@ It took me until now (!) to use it though:
 2. Same thing for use cases: was my use case valid?
 3. I was also harboring a childish fantasy that maybe, just maybe, Google would actually have a slick product to do this that I didn't know about
 
-Then I came upon [Guillaume Blaquiere's](https://github.com/guillaumeblaquiere) brilliant [write-up on Medium](https://medium.com/google-cloud/secure-cloud-run-cloud-functions-and-app-engine-with-api-key-73c57bededd1) that totally clicked with me. He shows how to do just what I wanted with Cloud Run, Cloud Functions and App Engine. I'm mostly a Cloud Functions person so this repo serves that perspective. It should be easy enough to adapt what you need. Guillaume has a very good repository as well, check it out!
+Then I came upon [Guillaume Blaquiere's](https://github.com/guillaumeblaquiere) brilliant [write-up on Medium](https://medium.com/google-cloud/secure-cloud-run-cloud-functions-and-app-engine-with-api-key-73c57bededd1) that totally clicked with me. He shows how to do just what I wanted, using Cloud Endpoints facing Cloud Run, Cloud Functions and App Engine. I'm mostly a Cloud Functions person so this repo serves that perspective. It should be easy enough to adapt what you need. Guillaume has a very good repository as well, check it out!
 
 I am sharing my take on it as it's leaner and more direct to my own sensibilities and it should be possible to run all the scripted steps in two batches (you need to export a variable somewhere in the middle).
 
