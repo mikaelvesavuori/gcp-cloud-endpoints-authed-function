@@ -44,15 +44,15 @@ gcloud beta iam service-accounts create $SERVICE_ACCOUNT
 # 4. Add IAM policy bindings to the service account
 gcloud projects add-iam-policy-binding $PROJECT_ID \
   --role=roles/servicemanagement.configEditor \
-	--member serviceAccount:$SERVICE_ACCOUNT@$PROJECT_ID.iam.gserviceaccount.com
+  --member serviceAccount:$SERVICE_ACCOUNT@$PROJECT_ID.iam.gserviceaccount.com
 
 # 5. Deploy Cloud Endpoint on Cloud Run
 gcloud beta run deploy $ENDPOINT_NAME \
- --image="gcr.io/endpoints-release/endpoints-runtime-serverless:2" \
- --allow-unauthenticated \
- --region $REGION \
- --platform managed \
- --service-account $SERVICE_ACCOUNT@$PROJECT_ID.iam.gserviceaccount.com
+  --image="gcr.io/endpoints-release/endpoints-runtime-serverless:2" \
+  --allow-unauthenticated \
+  --region $REGION \
+  --platform managed \
+  --service-account $SERVICE_ACCOUNT@$PROJECT_ID.iam.gserviceaccount.com
 
 # Result: You will receive a URL like: https://endpoint-gktiwkghga-ew.a.run.app
 # Set it below without the protocol part
@@ -60,12 +60,12 @@ export ENDPOINT_URL=
 
 # 6. Deploy a Cloud Function
 gcloud beta functions deploy $FUNCTION_NAME \
-	--trigger-http \
-	--runtime nodejs10 \
-	--source $FUNCTIONS_FOLDER \
-	--entry-point $FUNCTION_HANDLER \
-	--region $REGION \
-	--no-allow-unauthenticated
+  --trigger-http \
+  --runtime nodejs10 \
+  --source $FUNCTIONS_FOLDER \
+  --entry-point $FUNCTION_HANDLER \
+  --region $REGION \
+  --no-allow-unauthenticated
 
 # Result: You will receive a URL like: https://europe-west1-cloud-developer-basics.cloudfunctions.net/helloWorld
 
@@ -76,22 +76,22 @@ gcloud beta functions deploy $FUNCTION_NAME \
 # 8. Deploy the Cloud Endpoint service
 gcloud endpoints services deploy endpoint-configuration.yaml
 
-# 6. Update Cloud Endpoint with the new configuration from last step
+# 9. Update Cloud Endpoint with the new configuration from last step
 gcloud beta run services update $ENDPOINT_NAME \
-	--set-env-vars ENDPOINTS_SERVICE_NAME=$ENDPOINT_URL \
-	--project $PROJECT_ID \
-	--region $REGION \
-	--platform managed
+  --set-env-vars ENDPOINTS_SERVICE_NAME=$ENDPOINT_URL \
+  --project $PROJECT_ID \
+  --region $REGION \
+  --platform managed
 
-# 7. Enable the endpoint
+# 10. Enable the endpoint
 gcloud services enable $ENDPOINT_URL
 
-# 8. Authorize the gateway (Cloud Endpoint) to call Cloud Functions
+# 11. Authorize the gateway (Cloud Endpoint) to call Cloud Functions
 gcloud projects add-iam-policy-binding $PROJECT_ID \
   --role=roles/cloudfunctions.invoker \
-	--member serviceAccount:$SERVICE_ACCOUNT@$PROJECT_ID.iam.gserviceaccount.com
+  --member serviceAccount:$SERVICE_ACCOUNT@$PROJECT_ID.iam.gserviceaccount.com
 
-# 9. Create API key
+# 12. Create API key
 # Unfortunately this has to be done manually...
 # > Go to https://console.cloud.google.com/apis/credentials
 # > Click 'Create credentials' --> 'API key'
@@ -101,5 +101,5 @@ gcloud projects add-iam-policy-binding $PROJECT_ID \
 # > Export your key below
 export API_KEY=
 
-# 10. CURL your authenticated endpoint
+# 13. CURL your authenticated endpoint
 curl https://$ENDPOINT_URL/$FUNCTION_NAME?key=$API_KEY
